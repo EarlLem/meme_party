@@ -3,6 +3,7 @@
 #include <exception>
 #include <ostream>
 #include <vector>
+
 using namespace std;
 
 template<typename T>
@@ -13,31 +14,34 @@ private:
 	size_t n_lines_;
 	size_t n_columns_;
 	size_t length_;
+
 	class MatrixLine
 	{
 	public:
-		MatrixLine(size_t line_ind, size_t cols) :
+		MatrixLine(size_t line_ind, size_t cols, vector<T>& data) :
 			line_index(line_ind),
-			n_columns_(cols) {}
+			n_columns_(cols),
+			data_(data) {}
 		T& operator[](size_t index)
 		{
-			if ((index >= Matrix<T>::n_columns_) || (index < 0))
+			if ((index >= n_columns_) || (index < 0))
 			{
 				throw std::out_of_range("Index out of range!");
 			}
-			return Matrix<T>::data_[line_index * Matrix<T>::n_columns_ + index];
+			return data_[line_index * n_columns_ + index];
 		}
 		T operator[](size_t index) const
 		{
-			if ((index >= Matrix<T>::n_columns_) || (index < 0))
+			if ((index >= n_columns_) || (index < 0))
 			{
 				throw std::out_of_range("Index out of range!");
 			}
-			return Matrix<T>::data_[line_index * Matrix<T>::n_columns_ + index];
+			return data_[line_index * n_columns_ + index];
 		}
 	private:
 		size_t line_index;
 		size_t n_columns_;
+		vector<T>& data_;
 	};
 public:
 	Matrix() : n_lines_(0), n_columns_(0), length_(0) {}
@@ -49,7 +53,6 @@ public:
 			n_columns_ = columns;
 			length_ = lines * columns;
 			data_ = vector<T>(length_, element);
-			
 		}
 		else
 		{
@@ -116,20 +119,12 @@ public:
 		{
 			throw std::out_of_range("Index out of range!");
 		}
-		return { index };
-	}
-	MatrixLine operator[] (size_t index) const
-	{
-		if ((index >= n_lines_) || (index < 0))
-		{
-			throw std::out_of_range("Index out of range!");
-		}
-		return { index };
+		return { index, n_columns_, data_ };
 	}
 };
 
 template <class T>
-std::ostream& operator<<(std::ostream& out, const Matrix<T>& mat)
+std::ostream& operator<<(std::ostream& out, Matrix<T>& mat)
 {
 	size_t lines = mat.count_lines();
 	size_t columns = mat.count_columns();
@@ -145,5 +140,6 @@ std::ostream& operator<<(std::ostream& out, const Matrix<T>& mat)
 			out << std::endl;
 		}
 	}
+
 	return out;
 }
