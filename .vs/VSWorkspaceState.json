@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\old"
+    "\\threads",
+    "\\threads\\Threads"
   ],
-  "SelectedNode": "\\old\\laba1_2.sln",
+  "SelectedNode": "\\threads\\Threads\\Source.cpp",
   "PreviewInSolutionExplorer": false
 }

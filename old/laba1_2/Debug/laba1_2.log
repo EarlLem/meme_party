@@ -1,8 +1,0 @@
-﻿  main.cpp
-d:\univercity\projects\my_first_project\laba_1\laba1_2\laba1_2\csvreader.h(117): warning C4552: '>': result of expression not used
-  d:\univercity\projects\my_first_project\laba_1\laba1_2\laba1_2\main.cpp(14): note: see reference to function template instantiation 'void write_in_file<double>(std::string,std::vector<Matrix<double>,std::allocator<_Ty>>)' being compiled
-          with
-          [
-              _Ty=Matrix<double>
-          ]
-  laba1_2.vcxproj -> D:\Univercity\Projects\my_first_project\laba_1\laba1_2\Debug\laba1_2.exe
