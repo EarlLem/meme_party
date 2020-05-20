@@ -1,7 +1,7 @@
-#include "Headers/CSVReader.h"
-#include "Headers/linear_alg.h"
-#include "Headers/RKmethod.h"
-#include "Headers/Threads.h"
+#include "CSVReader.h"
+#include "linear_alg.h"
+#include "RKmethod.h"
+#include "Threads.h"
 
 int main()
 {
