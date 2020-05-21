@@ -1,4 +1,4 @@
-#include "Headers/Threads.h"
+#include "Threads.h"
 #include <string>
 #include <iostream>
 
@@ -12,7 +12,7 @@ void worker(char c) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
-int func()
+int funcg()
 {
 	FixedThreadPool<4, function<void()>>pool;
 	string jobs{ "one string to rule them all" };
