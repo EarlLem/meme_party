@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -42,18 +41,17 @@ public:
 			out << f.m_data[i] << " ";
 		return out;
 	}
+	friend std::istream& operator>>(std::istream& str, CSVRow& data)
+	{
+		data.readNextRow(str);
+		return str;
+	}
 	template<typename T>
 	friend Matrix<T> CSVtoMatrix(std::string file_name);
 
 private:
 	std::vector<std::string> m_data;
 };
-
-std::istream& operator>>(std::istream& str, CSVRow& data)
-{
-	data.readNextRow(str);
-	return str;
-}
 
 template<typename T>
 Matrix<T> CSVtoMatrix(std::string file_name)
@@ -110,5 +108,4 @@ void write_in_file(std::string file_name, std::vector<Matrix<T>> res)
 		myfile << std::to_string(res[i][res[i].get_amount_of_lines() - 1][0]) << "\n";
 	}
 	myfile.close();
-	std::cout << "Successfully written in " << file_name << std::endl;
 }
