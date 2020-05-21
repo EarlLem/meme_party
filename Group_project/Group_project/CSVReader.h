@@ -54,28 +54,30 @@ private:
 };
 
 template<typename T>
-Matrix<T> CSVtoMatrix(std::string file_name)
+Matrix<T>& CSVtoMatrix(std::string file_name)
 {
-	std::ifstream file(file_name);
-	std::vector<CSVRow> data;
-	CSVRow row;
+  std::ifstream file(file_name);
+  std::vector<CSVRow> data;
+  CSVRow row;
 
-	while (file >> row)
-	{
-		data.push_back(row);
-	}
-	size_t n_lines = data.size();
-	size_t n_columns = data[0].size();
-	Matrix<T> tmp(n_lines, n_columns);
-	for (size_t i = 0; i < n_lines; i++)
-	{
-		for (size_t j = 0; j < n_columns; j++)
-		{
-			tmp[i][j] = std::stod(data[i][j]);
-		}
-	}
+  while (file >> row)
+  {
+    data.push_back(row);
+  }
+  size_t n_lines = data.size();
+  size_t n_columns = data[0].size();//в первой строчке название, во второй коэффициенты
 
-	return tmp;
+
+  Matrix<T> tmp(n_lines - 2, n_columns);
+  for (size_t i = 2; i < n_lines; i++)
+  {
+    for (size_t j = 0; j < n_columns; j++)
+    {
+      tmp[i - 2][j] = std::stod(data[i][j]);
+    }
+  }
+
+  return *tmp;
 }
 
 template <typename T>
