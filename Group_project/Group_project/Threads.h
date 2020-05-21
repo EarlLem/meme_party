@@ -6,7 +6,6 @@
 #include <functional>
 #include <map>
 #include <sstream>
-#include <exception>
 #include "linear_alg.h"
 #include "CSVReader.h"
 using namespace std;
@@ -38,26 +37,19 @@ class FixedThreadPool
 	{
 		while (true)
 		{
-			try
-			{
-				unique_lock<mutex> lock(qm);
+			unique_lock<mutex> lock(qm);
 
-				if (que.empty())
-				{
-					unique_lock<mutex> lock(qf);
-					Finished[id] = true;
-					done.notify_all();
-					return;
-				}
-				auto job = move(que.front());
-				que.pop_front();
-				lock.unlock();
-				job();
-			}
-			catch (exception& a)
+			if (que.empty())
 			{
-				cout << "ERROR" << endl;
+				unique_lock<mutex> lock(qf);
+				Finished[id] = true;
+				done.notify_all();
+				return;
 			}
+			auto job = move(que.front());
+			que.pop_front();
+			lock.unlock();
+			job();
 		}
 	}
 public:
