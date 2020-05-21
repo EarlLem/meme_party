@@ -238,6 +238,40 @@ public:
 			throw std::out_of_range("Sizes do not match!");
 		}
 	}
+	Matrix slice(size_t begin, size_t end, size_t step = 1, bool columns = false)
+	{
+		if (!columns)
+		{
+			size_t b_size = (end - begin + 1) / step;
+			Matrix tmp(b_size, n_columns_);
+			size_t i_n = 0;
+			for (size_t i = begin; i <= end; i += step)
+			{
+				for (size_t j = 0; j < n_columns_; j++)
+				{
+					tmp.data_[i_n * n_columns_ + j] = data_[i * n_columns_ + j];
+				}
+				i_n++;
+			}
+			return tmp;
+		}
+		else
+		{
+			size_t b_size = (end - begin + 1) / step;
+			Matrix tmp(n_lines_, b_size);
+			size_t i_n = 0;
+			for (size_t i = 0; i < n_lines_; i++)
+			{
+				for (size_t j = begin; j <= end; j += step)
+				{
+					tmp.data_[i * b_size + i_n] = data_[i * n_columns_ + j];
+					i_n++;
+				}
+				i_n = 0;
+			}
+			return tmp;
+		}
+	}
 	friend Matrix operator*(Matrix a, T b)
 	{
 		size_t size_lines = a.get_amount_of_lines();

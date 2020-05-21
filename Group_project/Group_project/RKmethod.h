@@ -1,6 +1,9 @@
 #pragma once
 #include "linear_alg.h"	
 #include "Threads.h"
+#include "CSVReader.h"
+#include <sstream>
+#include <typeinfo>
 
 class LVOde
 {
@@ -325,11 +328,23 @@ public:
 			res.push_back(tmp_state);
 			t_0 += size_step;
 		}
-		std::cout << std::endl;
 		return res;
 	}
-	Matrix<double> do_your_job(const string name)
+	vector<Matrix<double>> do_your_job(string name)
 	{
-		return { 1,1,1 };
+		Matrix<double> s = CSVtoMatrix<double>(name).transpose();
+		return n_steps(0, s, 0.001, 1000);
+	}
+	string shout()
+	{
+		stringstream s;
+		string h = typeid(RK).name();
+		h = h.substr(h.find_last_of(' ') + 1);
+		s << h;
+		h.clear();
+		h = typeid(LV).name();
+		h = h.substr(h.find_last_of(' ') + 1);
+		s << '_' << h;
+		return s.str();
 	}
 };

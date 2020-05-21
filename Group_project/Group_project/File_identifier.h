@@ -97,9 +97,6 @@ public:
     }
 };
 
-//если мы не меняем имена классов для методов Рунге Кутте, которые делал Андрей
-//просто раскоментить 2 класса ниже и 2 хэндлера в Idendifier
-
 /*
 class RK57FEq1_Handler :public AbstractHandler
 {
@@ -168,7 +165,7 @@ public:
     }
 };
 */
-std::map<std::string, algorithm*> Identifier(const std::string& file_of_files, std::map<std::string, algorithm*>& mp)
+void Identifier(const std::string& file_of_files, std::map<std::string, algorithm*>& mp)
 {
     AbstractHandler* rk1 = new RKmethod_5_4_7fs_Handler;
     AbstractHandler* rk2 = new VernerRK_5_6_8_Handler;
@@ -209,13 +206,10 @@ std::map<std::string, algorithm*> Identifier(const std::string& file_of_files, s
     file_of_file.close();
 }
 
-
-//Далее ненужный по сути кусок, можно передавать имя файла и map сразу в Identifier
 int Identify_file_test()
 {
     std::map<std::string, algorithm*> lol;//создаем изначально мап куда забиваем данны
-    Identifier("C:\\Users\\lkdes\\source\\repos\\trash\\kek.csv",
-        lol);//сюда идет имя файла и ссылка на мап
+    Identifier("C:\\Users\\lkdes\\source\\repos\\trash\\kek.csv", lol);//сюда идет имя файла и ссылка на мап
     system("pause");
     return 0;
 }

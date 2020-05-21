@@ -116,13 +116,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSVReader.h" />
+    <ClInclude Include="File_identifier.h" />
+    <ClInclude Include="IteratorCSV.h" />
     <ClInclude Include="linear_alg.h" />
     <ClInclude Include="RKmethod.h" />
     <ClInclude Include="Threads.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Threads.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
