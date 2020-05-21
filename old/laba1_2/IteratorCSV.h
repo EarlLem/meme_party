@@ -1,4 +1,4 @@
-#include"Lida.h"//не знаем, как лидин файл называется
+#include"Lida.h"//РЅРµ Р·РЅР°РµРј, РєР°Рє Р»РёРґРёРЅ С„Р°Р№Р» РЅР°Р·С‹РІР°РµС‚СЃСЏ
 
 
 vector<string> mapnot(std::map<std::string, algorithm*> map) {
@@ -8,7 +8,7 @@ vector<string> mapnot(std::map<std::string, algorithm*> map) {
         vs.push_back(imap.first);
     return vs;
 }
-//вычленили пути из мапа в вектор стрингов
+//РІС‹С‡Р»РµРЅРёР»Рё РїСѓС‚Рё РёР· РјР°РїР° РІ РІРµРєС‚РѕСЂ СЃС‚СЂРёРЅРіРѕРІ
 
 template <typename T, typename U>
 class Iterator {
@@ -54,22 +54,22 @@ private:
     std::vector<T> m_data_;
 };
 
-//подается лидин мэп, в котором ключи это пути к файлам, значения это методы
+//РїРѕРґР°РµС‚СЃСЏ Р»РёРґРёРЅ РјСЌРї, РІ РєРѕС‚РѕСЂРѕРј РєР»СЋС‡Рё СЌС‚Рѕ РїСѓС‚Рё Рє С„Р°Р№Р»Р°Рј, Р·РЅР°С‡РµРЅРёСЏ СЌС‚Рѕ РјРµС‚РѕРґС‹
 
-//возвращается так же мэп, в котором ключи те же, но значения это ссылки на матрицы
+//РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ С‚Р°Рє Р¶Рµ РјСЌРї, РІ РєРѕС‚РѕСЂРѕРј РєР»СЋС‡Рё С‚Рµ Р¶Рµ, РЅРѕ Р·РЅР°С‡РµРЅРёСЏ СЌС‚Рѕ СЃСЃС‹Р»РєРё РЅР° РјР°С‚СЂРёС†С‹
 map<string, Matrix<double>&> ClientCode(std::map<std::string, algorithm*> map) {
-    vector<string> v = mapnot(map); //сохраняем пути в новый вектор
+    vector<string> v = mapnot(map);//СЃРѕС…СЂР°РЅСЏРµРј РїСѓС‚Рё РІ РЅРѕРІС‹Р№ РІРµРєС‚РѕСЂ
     Container<string> cont;
 
     for (int i; i < v.size(); i++) {
         cont.Add(v[i]);
     }
 
-    std::map<std::string, Matrix<double>&> matrmap;//создаем пустой мэп, который возвратим
+    std::map<std::string, Matrix<double>&> matrmap;//СЃРѕР·РґР°РµРј РїСѓСЃС‚РѕР№ РјСЌРї, РєРѕС‚РѕСЂС‹Р№ РІРѕР·РІСЂР°С‚РёРјГ¬
 
     Iterator<std::string, Container<std::string>>* it = cont.CreateIterator();
     for (it->First(); !it->IsDone(); it->Next()) {
-        matrmap.insert(std::pair<std::string, Matrix<double>&>(cont[it->Current()], CSVtoMatrix<double>(cont[it->Current()])));//обрабатываем файл
+        matrmap.insert(std::pair<std::string, Matrix<double>&>(cont[it->Current()], CSVtoMatrix<double>(cont[it->Current()])));//РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј С„Р°Р№Р»
     }
 
     return matrmap;
