@@ -30,6 +30,7 @@ public:
 
 private:
     U* m_p_data_;
+    int m_it_;
 };
 
 
@@ -65,11 +66,11 @@ map<string, Matrix<double>&> ClientCode(std::map<std::string, algorithm*> map) {
         cont.Add(v[i]);
     }
 
-    std::map<std::string, Matrix<double>&> matrmap;//создаем пустой мэп, который возвратимì
+    std::map<std::string, Matrix<double>&> matrmap;//создаем пустой мэп, который возвратим
 
     Iterator<std::string, Container<std::string>>* it = cont.CreateIterator();
     for (it->First(); !it->IsDone(); it->Next()) {
-        matrmap.insert(std::pair<std::string, Matrix<double>&>(cont[it->Current()], CSVtoMatrix<double>(cont[it->Current()])));//обрабатываем файл
+        matrmap[cont[it->Current()]] = CSVtoMatrix<double>(cont[it->Current()]);//обрабатываем файл
     }
 
     return matrmap;
