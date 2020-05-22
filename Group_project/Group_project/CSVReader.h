@@ -66,14 +66,15 @@ Matrix<T>& CSVtoMatrix(std::string file_name)
   }
   size_t n_lines = data.size();
   size_t n_columns = data[0].size();//в первой строчке название, во второй коэффициенты
+  //коэффициенты записываются в первую строку матрицы
 
 
   Matrix<T> tmp(n_lines - 2, n_columns);
-  for (size_t i = 2; i < n_lines; i++)
+  for (size_t i = 1; i < n_lines; i++)
   {
     for (size_t j = 0; j < n_columns; j++)
     {
-      tmp[i - 2][j] = std::stod(data[i][j]);
+      tmp[i - 1][j] = std::stod(data[i][j]);
     }
   }
 
