@@ -1,4 +1,4 @@
-#include"File_identifier.h"//не знаем, как лидин файл называется
+#include"File_identifier.h"
 
 
 vector<string> mapnot(std::map<std::string, algorithm*> map) {
@@ -13,24 +13,30 @@ vector<string> mapnot(std::map<std::string, algorithm*> map) {
 template <typename T, typename U>
 class Iterator {
 public:
-    typedef typename std::vector<T>::iterator iter_type;
-    Iterator(U* p_data, bool reverse = false) : m_p_data_(p_data) {
-        m_it_ = m_p_data_->m_data_.begin();
-    }
-    void First() {
-        m_it_ = m_p_data_->m_data_.begin();
-    }
-    void Next() { m_it_++; }
+  typedef typename std::vector<T>::iterator iter_type;
+  Iterator(U* p_data, bool reverse = false) : m_p_data_(p_data) {
+    m_it_ = m_p_data_->m_data_.begin();
+  }
 
-    bool IsDone() {
-        return (m_it_ == m_p_data_->m_data_.end());
-    }
+  void First() {
+    m_it_ = m_p_data_->m_data_.begin();
+  }
 
-    int Current() { return m_it_; }
+  void Next() {
+    m_it_++;
+  }
+
+  bool IsDone() {
+    return (m_it_ == m_p_data_->m_data_.end());
+  }
+
+  iter_type Current() {
+    return m_it_;
+  }
 
 private:
-    U* m_p_data_;
-    int m_it_;
+  U* m_p_data_;
+  iter_type m_it_;
 };
 
 
@@ -47,10 +53,6 @@ public:
         return new Iterator<T, Container>(this);
     }
 
-    T operator[](size_t index) {
-        return m_data_[index];
-    }
-
 private:
     std::vector<T> m_data_;
 };
@@ -58,19 +60,19 @@ private:
 //подается лидин мэп, в котором ключи это пути к файлам, значения это методы
 
 //возвращается так же мэп, в котором ключи те же, но значения это ссылки на матрицы
-map<string, Matrix<double>&> ClientCode(std::map<std::string, algorithm*> map) {
+map<string, Matrix<double>*> ClientCode(std::map<std::string, algorithm*> map) {
     vector<string> v = mapnot(map);//сохраняем пути в новый вектор
     Container<string> cont;
 
-    for (int i; i < v.size(); i++) {
+    for (int i = 0; i < v.size(); i++) {
         cont.Add(v[i]);
     }
 
-    std::map<std::string, Matrix<double>&> matrmap;//создаем пустой мэп, который возвратим
+    std::map<string, Matrix<double>*> matrmap;//создаем пустой мэп, который возвратим
 
     Iterator<std::string, Container<std::string>>* it = cont.CreateIterator();
     for (it->First(); !it->IsDone(); it->Next()) {
-        matrmap[cont[it->Current()]] = CSVtoMatrix<double>(cont[it->Current()]);//обрабатываем файл
+      matrmap[*(it->Current())] = CSVtoMatrix<double>(*(it->Current()));//обрабатываем файл
     }
 
     return matrmap;
