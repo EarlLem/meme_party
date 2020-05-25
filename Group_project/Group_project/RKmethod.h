@@ -330,10 +330,11 @@ public:
 		}
 		return res;
 	}
-	vector<Matrix<double>> do_your_job(string name)
+	vector<Matrix<double>> do_your_job(Matrix<double>* data)
 	{
-		Matrix<double> s = CSVtoMatrix<double>(name).transpose();
-		return n_steps(0, s, 0.001, 1000);
+		/*Matrix<double> s = CSVtoMatrix<double>(name).transpose();
+		return n_steps(0, s, 0.001, 1000);*/
+		return vector<Matrix<double>>(0);
 	}
 	string shout()
 	{

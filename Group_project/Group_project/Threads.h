@@ -15,7 +15,7 @@ mutex cout_mutex;
 class algorithm
 {
 public:
-	virtual vector<Matrix<double>> do_your_job(string name) = 0;
+	virtual vector<Matrix<double>> do_your_job(Matrix<double>* data) = 0;
 	virtual string shout() = 0;
 };
 
@@ -77,9 +77,9 @@ public:
 	}
 };
 
-void worker(algorithm* a, string name)
+void worker(algorithm* a, Matrix<double>* data)
 {
-	vector<Matrix<double>> result = a->do_your_job(name);
+	vector<Matrix<double>> result = a->do_your_job(data);
 	string new_name = a->shout() + ".csv";
 	write_in_file(new_name, result);
 	{
