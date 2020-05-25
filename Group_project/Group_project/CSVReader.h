@@ -65,11 +65,10 @@ Matrix<T>& CSVtoMatrix(std::string file_name)
     data.push_back(row);
   }
   size_t n_lines = data.size();
-  size_t n_columns = data[0].size();//в первой строчке название, во второй коэффициенты
-  //коэффициенты записываются в первую строку матрицы
+  size_t n_columns = data[0].size();
 
 
-  Matrix<T> tmp(n_lines - 2, n_columns);
+  Matrix<T> tmp(n_lines - 1, n_columns);
   for (size_t i = 1; i < n_lines; i++)
   {
     for (size_t j = 0; j < n_columns; j++)
@@ -78,7 +77,7 @@ Matrix<T>& CSVtoMatrix(std::string file_name)
     }
   }
 
-  return *tmp;
+  return tmp;
 }
 
 template <typename T>

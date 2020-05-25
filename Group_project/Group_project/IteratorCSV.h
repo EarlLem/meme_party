@@ -1,4 +1,4 @@
-#include"File_identifier.h"//не знаем, как лидин файл называется
+#include "File_identifier.h"//не знаем, как лидин файл называется
 
 
 vector<string> mapnot(std::map<std::string, algorithm*> map) {
@@ -9,6 +9,9 @@ vector<string> mapnot(std::map<std::string, algorithm*> map) {
     return vs;
 }
 //вычленили пути из мапа в вектор стрингов
+
+template <class T>
+class Container;
 
 template <typename T, typename U>
 class Iterator {
@@ -26,11 +29,11 @@ public:
         return (m_it_ == m_p_data_->m_data_.end());
     }
 
-    int Current() { return m_it_; }
+    iter_type Current() { return m_it_; }
 
 private:
     U* m_p_data_;
-    int m_it_;
+    iter_type m_it_;
 };
 
 
@@ -47,7 +50,7 @@ public:
         return new Iterator<T, Container>(this);
     }
 
-    T operator[](size_t index) {
+    T operator[](std::vector<T>::iterator index) {
         return m_data_[index];
     }
 
