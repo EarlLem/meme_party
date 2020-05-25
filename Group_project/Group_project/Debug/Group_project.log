@@ -20,16 +20,8 @@ D:\GitHub\meme_party\Group_project\Group_project\K_means.h(64,60): warning C4244
           ]
 D:\GitHub\meme_party\Group_project\Group_project\K_means.h(67,25): warning C4018: '<': signed/unsigned mismatch
 D:\GitHub\meme_party\Group_project\Group_project\K_means.h(81,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): warning C4346: 'std::vector<T,std::allocator<_Ty>>::iterator': dependent name is not a type
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): message : prefix with 'typename' to indicate a type
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(56): message : see reference to class template instantiation 'Container<T>' being compiled
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): error C2061: syntax error: identifier 'iterator'
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): error C2805: binary 'operator [' has too few parameters
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): error C2333: 'Container<T>::operator []': error in function declaration; skipping function body
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(50,1): error C2333: 'Container<std::string>::operator []': error in function declaration; skipping function body
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(63): message : see reference to class template instantiation 'Container<std::string>' being compiled
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(65,19): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(73,35): error C2264: 'Container<std::string>::operator []': error in function definition or declaration; function not called
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(73,35): error C2088: '[': illegal for class
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(73,78): error C2264: 'Container<std::string>::operator []': error in function definition or declaration; function not called
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(73,78): error C2088: '[': illegal for class
+D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(67,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\meme_party\Group_project\Group_project\CSVReader.h(82): warning C4172: returning address of local variable or temporary: tmp
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(64): warning C4715: 'RKmethod_5_4_7fs_Handler::Handle': not all control paths return a value
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(97): warning C4715: 'VernerRK_5_6_8_Handler::Handle': not all control paths return a value
+  Group_project.vcxproj -> D:\GitHub\meme_party\Group_project\Debug\Group_project.exe

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -54,30 +54,32 @@ private:
 };
 
 template<typename T>
-Matrix<T>& CSVtoMatrix(std::string file_name)
+Matrix<T>* CSVtoMatrix(std::string file_name)
 {
-  std::ifstream file(file_name);
-  std::vector<CSVRow> data;
-  CSVRow row;
+	std::ifstream file(file_name);
+	std::vector<CSVRow> data;
+	CSVRow row;
 
-  while (file >> row)
-  {
-    data.push_back(row);
-  }
-  size_t n_lines = data.size();
-  size_t n_columns = data[0].size();
+	while (file >> row)
+	{
+		data.push_back(row);
+	}
+	size_t n_lines = data.size();
+	size_t n_columns = data[0].size();
 
 
-  Matrix<T> tmp(n_lines - 1, n_columns);
-  for (size_t i = 1; i < n_lines; i++)
-  {
-    for (size_t j = 0; j < n_columns; j++)
-    {
-      tmp[i - 1][j] = std::stod(data[i][j]);
-    }
-  }
+	Matrix<T> tmp(n_lines - 1, n_columns);
+	for (size_t i = 1; i < n_lines; i++)
+	{
+		for (size_t j = 0; j < n_columns; j++)
+		{
+			tmp[i - 1][j] = std::stod(data[i][j]);
+		}
+	}
 
-  return tmp;
+	Matrix<T>* tmp1 = &tmp;
+
+	return tmp1;
 }
 
 template <typename T>

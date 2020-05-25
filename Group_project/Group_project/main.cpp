@@ -4,6 +4,8 @@
 #include "linear_alg.h"
 #include "K_means.h"
 #include "IteratorCSV.h"
+#include "File_identifier.h"
+#include "CSVReader.h"
 
 int main()
 {
