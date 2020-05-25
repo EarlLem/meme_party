@@ -54,7 +54,7 @@ private:
 };
 
 template<typename T>
-Matrix<T>& CSVtoMatrix(std::string file_name)
+Matrix<T>* CSVtoMatrix(std::string file_name)
 {
   std::ifstream file(file_name);
   std::vector<CSVRow> data;
@@ -69,7 +69,7 @@ Matrix<T>& CSVtoMatrix(std::string file_name)
   //коэффициенты записываются в первую строку матрицы
 
 
-  Matrix<T> tmp(n_lines - 2, n_columns);
+  Matrix<T> tmp(n_lines - 1, n_columns);
   for (size_t i = 1; i < n_lines; i++)
   {
     for (size_t j = 0; j < n_columns; j++)
@@ -78,7 +78,9 @@ Matrix<T>& CSVtoMatrix(std::string file_name)
     }
   }
 
-  return *tmp;
+  Matrix<T>* tmp1 = &tmp;
+
+  return tmp1;
 }
 
 template <typename T>

@@ -332,8 +332,8 @@ public:
 	}
 	vector<Matrix<double>> do_your_job(string name)
 	{
-		Matrix<double> s = CSVtoMatrix<double>(name).transpose();
-		return n_steps(0, s, 0.001, 1000);
+		Matrix<double> s = (CSVtoMatrix<double>(name)).transpose();
+    return n_steps(0, s, 0.001, 1000);
 	}
 	string shout()
 	{
