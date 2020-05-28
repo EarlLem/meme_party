@@ -1,5 +1,6 @@
 #pragma once
 #include "CSVReader.h"
+#include "Threads.h"
 #include "RKmethod.h"
 #include <map>
 #include <cstdlib>
@@ -43,19 +44,19 @@ public:
         {
             if (syst == "LVOde")
             {
-                return new RKintegrator<RKmethod_5_4_7fs, LVOde>;
+                return new RKintegrator<RKmethod_5_4_7fs, LVOde>();
             }
             else if (syst == "Osc_Van_der_Pol")
             {
-                return new RKintegrator<RKmethod_5_4_7fs, Osc_Van_der_Pol>;
+                return new RKintegrator<RKmethod_5_4_7fs, Osc_Van_der_Pol>();
             }
             else if (syst == "Attractor_Lorence")
             {
-                return new RKintegrator<RKmethod_5_4_7fs, Attractor_Lorence>;
+                return new RKintegrator<RKmethod_5_4_7fs, Attractor_Lorence>();
             }
             else if (syst == "Chua_chain")
             {
-                return new RKintegrator<RKmethod_5_4_7fs, Chua_chain>;
+                return new RKintegrator<RKmethod_5_4_7fs, Chua_chain>();
             }
         }
         else {
@@ -76,19 +77,19 @@ public:
         {
             if (syst == "LVOde")
             {
-                return new RKintegrator<VernerRK_5_6_8, LVOde>;
+                return new RKintegrator<VernerRK_5_6_8, LVOde>();
             }
             else if (syst == "Osc_Van_der_Pol")
             {
-                return new RKintegrator<VernerRK_5_6_8, Osc_Van_der_Pol>;
+                return new RKintegrator<VernerRK_5_6_8, Osc_Van_der_Pol>();
             }
             else if (syst == "Attractor_Lorence")
             {
-                return new RKintegrator<VernerRK_5_6_8, Attractor_Lorence>;
+                return new RKintegrator<VernerRK_5_6_8, Attractor_Lorence>();
             }
             else if (syst == "Chua_chain")
             {
-                return new RKintegrator<VernerRK_5_6_8, Chua_chain>;
+                return new RKintegrator<VernerRK_5_6_8, Chua_chain>();
             }
         }
         else {
@@ -204,12 +205,4 @@ void Identifier(const std::string& file_of_files, std::map<std::string, algorith
         std::cout << "Error! Coldn't open file with FILES" << std::endl;
     }
     file_of_file.close();
-}
-
-int Identify_file_test()
-{
-    std::map<std::string, algorithm*> lol;//создаем изначально мап куда забиваем данны
-    Identifier("C:\\Users\\lkdes\\source\\repos\\trash\\kek.csv", lol);//сюда идет имя файла и ссылка на мап
-    system("pause");
-    return 0;
 }

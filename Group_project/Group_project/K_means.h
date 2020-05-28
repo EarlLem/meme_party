@@ -2,6 +2,7 @@
 #include "linear_alg.h"
 #include <iterator>
 #include <algorithm>
+#include "Threads.h"
 
 double distance(Matrix<double> a, Matrix<double> b)//расстояние между точками
 {
@@ -19,10 +20,10 @@ public:
 		_dots = Matrix<double>(0, 0);
 	}
 
-	vector<Matrix<double>> do_your_job(Matrix<double>* data)
+	vector<Matrix<double>> do_your_job(Matrix<double> data)
 	{
-		_k = static_cast<int>((*data)[0][0]);
-		_dots = data->slice(1, data->get_amount_of_lines() - 1);
+		_k = static_cast<int>(data[0][0]);
+		_dots = data.slice(1, data.get_amount_of_lines() - 1);
 
 		bool cont = true;//параметр отвечающий за продолжение выполнения алгоритма
 		int amount = _dots.get_amount_of_lines();//количество точек
@@ -89,7 +90,10 @@ public:
 		}
 
 	}
-	string shout() {}
+	string shout() 
+	{
+		return "K_means";
+	}
 private:
 	int _k;
 	Matrix<double> _dots;

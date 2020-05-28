@@ -5,7 +5,14 @@
 #include <sstream>
 #include <typeinfo>
 
-class LVOde
+class Ode
+{
+public:
+	virtual Matrix<double> operator()(double, Matrix<double>) = 0;
+	virtual void set_const(vector<double>) = 0;
+};
+
+class LVOde: public Ode
 {
 public:
 	Matrix<double> operator()(double t, Matrix<double>state_vector) //returns ds/dt for s and t
@@ -15,14 +22,25 @@ public:
 		tmp[1][0] = state_vector[1][0] * (-c + d * state_vector[0][0]);
 		return tmp;
 	}
+	void set_const(vector<double> consts)
+	{
+		if (consts.size() != 4)
+		{
+			throw out_of_range("Doesn't match with consts number");
+		}
+		a = consts[0];
+		b = consts[1];
+		c = consts[2];
+		d = consts[3];
+	}
 private:
-	double a = 1.;
-	double b = 1.5;
-	double c = 2;
-	double d = 1.5;
+	double a;
+	double b;
+	double c;
+	double d;
 };
 
-class Osc_Van_der_Pol
+class Osc_Van_der_Pol: public Ode
 {
 public:
 	Matrix<double> operator()(double t, Matrix<double>state_vector) //returns ds/dt for s and t
@@ -34,11 +52,19 @@ public:
 		tmp[1][0] = x / mu;
 		return tmp;
 	}
+	void set_const(vector<double> consts)
+	{
+		if (consts.size() != 1)
+		{
+			throw out_of_range("Doesn't match with consts number");
+		}
+		mu = consts[0];
+	}
 private:
-	double mu = 8.53;
+	double mu;
 };
 
-class Attractor_Lorence
+class Attractor_Lorence: public Ode
 {
 public:
 	Matrix<double> operator()(double t, Matrix<double>state_vector) //returns ds/dt for s and t
@@ -52,13 +78,23 @@ public:
 		tmp[2][0] = x * y - b * z;
 		return tmp;
 	}
+	void set_const(vector<double> consts)
+	{
+		if (consts.size() != 3)
+		{
+			throw out_of_range("Doesn't match with consts number");
+		}
+		sigma = consts[0];
+		r = consts[1];
+		b = consts[2];
+	}
 private:
-	double sigma = 10.;
-	double r = 28.;
-	double b = 8. / 3;
+	double sigma;
+	double r;
+	double b;
 };
 
-class Chua_chain
+class Chua_chain: public Ode
 {
 public:
 	Matrix<double> operator()(double t, Matrix<double>state_vector) //returns ds/dt for s and t
@@ -73,19 +109,23 @@ public:
 		tmp[2][0] = -beta * y;
 		return tmp;
 	}
+	void set_const(vector<double> consts)
+	{
+		if (consts.size() != 4)
+		{
+			throw out_of_range("Doesn't match with consts number");
+		}
+		alpha = consts[0];
+		beta = consts[1];
+		m1 = consts[2];
+		m0 = consts[3];
+	}
 private:
 	double alpha = 7.;
 	double beta = 10.;
 	double m1 = -5. / 7;
 	double m0 = -8. / 7;
 };
-
-template<typename LV>
-Matrix<double> func(double t, Matrix<double> vec)
-{
-	LV lv;
-	return lv(t, vec);
-}
 
 class RKmethod_5_4_7fs // (5,6)
 {
@@ -166,11 +206,11 @@ public:
 				isFSAL=true;
 		*/
 	}
-	Matrix<double> execute(double t_0, Matrix<double>& y_0, double h, Matrix<double>(*f)(double, Matrix<double>))
+	Matrix<double> execute(double t_0, Matrix<double>& y_0, double h, Ode* f)
 	{
 		std::vector<Matrix<double>> k;
 		Matrix<double> tmp_y(y_0.get_amount_of_lines(), 1);
-		k.push_back(f(t_0, y_0));
+		k.push_back((*f)(t_0, y_0));
 		for (size_t i = 1; i < 7; i++)
 		{
 			tmp_y = tmp_y * 0;
@@ -178,7 +218,7 @@ public:
 			{
 				tmp_y = tmp_y + A[i][j] * k[j];
 			}
-			k.push_back(f(t_0 + c[i][0] * h, y_0 + tmp_y * h));
+			k.push_back((*f)(t_0 + c[i][0] * h, y_0 + tmp_y * h));
 		}
 		Matrix<double> tmp_acc(y_0.get_amount_of_lines(), 1, 0.);
 		tmp_y = y_0;
@@ -266,11 +306,11 @@ public:
 		b_subs[6][0] = 891. / 8320;
 		b_subs[7][0] = 2. / 35;
 	}
-	Matrix<double> execute(double t_0, Matrix<double>& y_0, double h, Matrix<double>(*f)(double, Matrix<double>))
+	Matrix<double> execute(double t_0, Matrix<double>& y_0, double h, Ode* f)
 	{
 		std::vector<Matrix<double>> k;
 		Matrix<double> tmp_y(y_0.get_amount_of_lines(), 1);
-		k.push_back(f(t_0, y_0));
+		k.push_back((*f)(t_0, y_0));
 		for (size_t i = 1; i < 8; i++)
 		{
 			tmp_y = tmp_y * 0;
@@ -278,7 +318,7 @@ public:
 			{
 				tmp_y = tmp_y + A[i][j] * k[j];
 			}
-			k.push_back(f(t_0 + c[i][0] * h, y_0 + tmp_y * h));
+			k.push_back((*f)(t_0 + c[i][0] * h, y_0 + tmp_y * h));
 		}
 		Matrix<double> tmp_acc(y_0.get_amount_of_lines(), 1, 0.);
 		tmp_y = y_0;
@@ -306,21 +346,23 @@ template<typename RK, typename LV>
 class RKintegrator : public algorithm
 {
 public:
-	Matrix<double> step(double t_0, Matrix<double> beg_state, double size_step)
+	Matrix<double> step(double t_0, Matrix<double> beg_state, double size_step, Ode* f)
 	{
 		RK rk;
 		Matrix<double> state;
-		state = rk.execute(t_0, beg_state, size_step, &func<LV>);
+		state = rk.execute(t_0, beg_state, size_step, f);
 		return state;
 	}
-	std::vector<Matrix<double>> n_steps(double t_0, Matrix<double>& beg_state, double size_step, size_t n)
+	std::vector<Matrix<double>> n_steps(double t_0, Matrix<double> beg_state, double size_step, size_t n)
 	{
 		std::vector<Matrix<double>> res;
 		Matrix<double> tmp_state;
+		Ode* f = new LV();
+		f->set_const(consts);
 		res.push_back(beg_state);
 		for (size_t i = 0; i < n; i++)
 		{
-			tmp_state = step(t_0, beg_state, size_step);
+			tmp_state = step(t_0, beg_state, size_step, f);
 			for (size_t i = 0; i < beg_state.get_amount_of_lines(); i++)
 			{
 				beg_state[i][0] = tmp_state[i][0];
@@ -330,11 +372,28 @@ public:
 		}
 		return res;
 	}
-	vector<Matrix<double>> do_your_job(Matrix<double>* data)
+	vector<Matrix<double>> do_your_job(Matrix<double> d)
 	{
-		/*Matrix<double> s = CSVtoMatrix<double>(name).transpose();
-		return n_steps(0, s, 0.001, 1000);*/
-		return vector<Matrix<double>>(0);
+		vector<Matrix<double>> states;
+		vector<Matrix<double>> res;
+		double t_0 = d[0][0];
+		double size_step = d[0][1];
+		size_t n = d[0][2];
+		size_t dim = d[0][3];
+		for (size_t i = 4; i < d.get_amount_of_columns(); i++)
+		{
+			consts.push_back(d[0][i]);
+		}
+		for (size_t i = 1; i < d.get_amount_of_lines(); i++)
+		{
+			states.push_back(d.slice(i, i).slice(0, dim - 1, 1, true).transpose());
+		}
+		for (auto i : states)
+		{
+			auto k = n_steps(t_0, i, size_step, n);
+			res.insert(res.end(), k.cbegin(), k.cend());
+		}
+		return res;
 	}
 	string shout()
 	{
@@ -348,4 +407,10 @@ public:
 		s << '_' << h;
 		return s.str();
 	}
+	void set_consts(vector<double> v)
+	{
+		consts = v;
+	}
+private:
+	vector<double> consts;
 };

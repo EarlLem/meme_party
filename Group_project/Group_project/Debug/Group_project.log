@@ -1,27 +1,17 @@
 ﻿  main.cpp
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(36,24): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(46,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(54,33): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned int', possible loss of data
+D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(68,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\meme_party\Group_project\Group_project\RKmethod.h(381,12): warning C4244: 'initializing': conversion from 'T' to 'size_t', possible loss of data
           with
           [
-              _Ty=double
+              T=double
           ]
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(57,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(62,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(64,30): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned int', possible loss of data
+D:\GitHub\meme_party\Group_project\Group_project\RKmethod.h(376): message : while compiling class template member function 'std::vector<Matrix<double>,std::allocator<Matrix<double>>> RKintegrator<VernerRK_5_6_8,Chua_chain>::do_your_job(Matrix<double>)'
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(92): message : see reference to class template instantiation 'RKintegrator<VernerRK_5_6_8,Chua_chain>' being compiled
+D:\GitHub\meme_party\Group_project\Group_project\RKmethod.h(382,14): warning C4244: 'initializing': conversion from 'T' to 'size_t', possible loss of data
           with
           [
-              _Ty=double
+              T=double
           ]
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(64,60): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned int', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(67,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\K_means.h(81,25): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\IteratorCSV.h(67,23): warning C4018: '<': signed/unsigned mismatch
-D:\GitHub\meme_party\Group_project\Group_project\CSVReader.h(82): warning C4172: returning address of local variable or temporary: tmp
-D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(64): warning C4715: 'RKmethod_5_4_7fs_Handler::Handle': not all control paths return a value
-D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(97): warning C4715: 'VernerRK_5_6_8_Handler::Handle': not all control paths return a value
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(98): warning C4715: 'VernerRK_5_6_8_Handler::Handle': not all control paths return a value
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(65): warning C4715: 'RKmethod_5_4_7fs_Handler::Handle': not all control paths return a value
   Group_project.vcxproj -> D:\GitHub\meme_party\Group_project\Debug\Group_project.exe

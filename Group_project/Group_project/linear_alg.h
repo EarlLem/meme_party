@@ -238,7 +238,7 @@ public:
 			throw std::out_of_range("Sizes do not match!");
 		}
 	}
-	Matrix slice(size_t begin, size_t end, size_t step = 1, bool columns = false)
+	Matrix slice(size_t begin, size_t end, size_t step = 1, bool columns = false) const
 	{
 		if (!columns)
 		{

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <queue>
 #include <mutex>
 #include <condition_variable>
@@ -7,17 +7,19 @@
 #include <map>
 #include <sstream>
 #include "linear_alg.h"
-#include "CSVReader.h"
-using namespace std;
-
-mutex cout_mutex;
+#include <ctime>
 
 class algorithm
 {
 public:
-	virtual vector<Matrix<double>> do_your_job(Matrix<double>* data) = 0;
+	virtual vector<Matrix<double>> do_your_job(Matrix<double> data) = 0;
 	virtual string shout() = 0;
 };
+
+#include "IteratorCSV.h"
+using namespace std;
+
+mutex cout_mutex;
 
 template <size_t N, class T>
 class FixedThreadPool
@@ -72,15 +74,16 @@ public:
 		unique_lock<mutex> lock(qf);
 		done.wait(lock, [this]
 		{
-			return all_of(Finished, Finished + N, [](bool e) {return e; });
+			return all_of(Finished, Finished + N, [](bool e) { return e; });
 		});
 	}
 };
 
-void worker(algorithm* a, Matrix<double>* data)
+void worker(algorithm* a, Matrix<double> data)
 {
 	vector<Matrix<double>> result = a->do_your_job(data);
-	string new_name = a->shout() + ".csv";
+	unsigned int t = clock();
+	string new_name = to_string(t) + ".csv";
 	write_in_file(new_name, result);
 	{
 		std::lock_guard<std::mutex> lock(cout_mutex);
@@ -92,9 +95,10 @@ template <int N>
 void paralel_alg(map<string, algorithm*> task_list)
 {
 	FixedThreadPool<N, function<void()>>pool;
-	for (auto j : task_list)
+	map<string, Matrix<double>> name_data = ClientCode(task_list);
+	for (auto& j : task_list)
 	{
-		pool.push(bind(worker, j.second, j.first));
+		pool.push(bind(worker, j.second, name_data[j.first]));
 	}
 	pool.start();
 	pool.wait_finished();

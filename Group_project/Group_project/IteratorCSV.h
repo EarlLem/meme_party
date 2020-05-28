@@ -1,10 +1,11 @@
-#include"File_identifier.h"
-
+#pragma once
+#include "Threads.h"
+#include "File_identifier.h"
 
 vector<string> mapnot(std::map<std::string, algorithm*> map) {
     std::vector<string> vs;
     vs.reserve(map.size());
-    for (auto const& imap : map)
+    for (auto& imap : map)
         vs.push_back(imap.first);
     return vs;
 }
@@ -60,7 +61,7 @@ private:
 //подается лидин мэп, в котором ключи это пути к файлам, значения это методы
 
 //возвращается так же мэп, в котором ключи те же, но значения это ссылки на матрицы
-map<string, Matrix<double>*> ClientCode(std::map<std::string, algorithm*> map) {
+map<string, Matrix<double>> ClientCode(std::map<std::string, algorithm*> map) {
     vector<string> v = mapnot(map);//сохраняем пути в новый вектор
     Container<string> cont;
 
@@ -68,7 +69,7 @@ map<string, Matrix<double>*> ClientCode(std::map<std::string, algorithm*> map) {
         cont.Add(v[i]);
     }
 
-    std::map<string, Matrix<double>*> matrmap;//создаем пустой мэп, который возвратим
+    std::map<string, Matrix<double>> matrmap;//создаем пустой мэп, который возвратим
 
     Iterator<std::string, Container<std::string>>* it = cont.CreateIterator();
     for (it->First(); !it->IsDone(); it->Next()) {
