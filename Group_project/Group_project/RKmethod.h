@@ -395,18 +395,6 @@ public:
 		}
 		return res;
 	}
-	string shout()
-	{
-		stringstream s;
-		string h = typeid(RK).name();
-		h = h.substr(h.find_last_of(' ') + 1);
-		s << h;
-		h.clear();
-		h = typeid(LV).name();
-		h = h.substr(h.find_last_of(' ') + 1);
-		s << '_' << h;
-		return s.str();
-	}
 	void set_consts(vector<double> v)
 	{
 		consts = v;

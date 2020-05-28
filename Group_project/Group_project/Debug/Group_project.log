@@ -12,6 +12,6 @@ D:\GitHub\meme_party\Group_project\Group_project\RKmethod.h(382,14): warning C42
           [
               T=double
           ]
-D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(98): warning C4715: 'VernerRK_5_6_8_Handler::Handle': not all control paths return a value
 D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(65): warning C4715: 'RKmethod_5_4_7fs_Handler::Handle': not all control paths return a value
+D:\GitHub\meme_party\Group_project\Group_project\File_identifier.h(98): warning C4715: 'VernerRK_5_6_8_Handler::Handle': not all control paths return a value
   Group_project.vcxproj -> D:\GitHub\meme_party\Group_project\Debug\Group_project.exe

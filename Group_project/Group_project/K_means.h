@@ -90,10 +90,6 @@ public:
 		}
 
 	}
-	string shout() 
-	{
-		return "K_means";
-	}
 private:
 	int _k;
 	Matrix<double> _dots;

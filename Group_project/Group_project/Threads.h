@@ -13,7 +13,6 @@ class algorithm
 {
 public:
 	virtual vector<Matrix<double>> do_your_job(Matrix<double> data) = 0;
-	virtual string shout() = 0;
 };
 
 #include "IteratorCSV.h"
@@ -79,11 +78,18 @@ public:
 	}
 };
 
-void worker(algorithm* a, Matrix<double> data)
+string edit_name(string name)
+{
+	string res = "result";
+	size_t n = name.find_last_of("/");
+	res.insert(res.end(), name.begin() + n, name.end());
+	return res;
+}
+
+void worker(algorithm* a, Matrix<double> data, string name)
 {
 	vector<Matrix<double>> result = a->do_your_job(data);
-	unsigned int t = clock();
-	string new_name = to_string(t) + ".csv";
+	string new_name = edit_name(name);
 	write_in_file(new_name, result);
 	{
 		std::lock_guard<std::mutex> lock(cout_mutex);
@@ -98,7 +104,7 @@ void paralel_alg(map<string, algorithm*> task_list)
 	map<string, Matrix<double>> name_data = ClientCode(task_list);
 	for (auto& j : task_list)
 	{
-		pool.push(bind(worker, j.second, name_data[j.first]));
+		pool.push(bind(worker, j.second, name_data[j.first], j.first));
 	}
 	pool.start();
 	pool.wait_finished();
