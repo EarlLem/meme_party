@@ -9,7 +9,7 @@
 class CSVRow
 {
 public:
-	std::string const& operator[](std::size_t index) const
+	std::string & operator[](std::size_t index)
 	{
 		return m_data[index];
 	}
@@ -54,7 +54,7 @@ private:
 };
 
 template<typename T>
-Matrix<T>* CSVtoMatrix(std::string file_name)
+Matrix<T> CSVtoMatrix(std::string file_name)
 {
 	std::ifstream file(file_name);
 	std::vector<CSVRow> data;
@@ -68,18 +68,19 @@ Matrix<T>* CSVtoMatrix(std::string file_name)
 	size_t n_columns = data[0].size();
 
 
-	Matrix<T> tmp(n_lines - 1, n_columns);
+	Matrix<T> tmp(n_lines - 1, n_columns, 0);
 	for (size_t i = 1; i < n_lines; i++)
 	{
 		for (size_t j = 0; j < n_columns; j++)
 		{
-			tmp[i - 1][j] = std::stod(data[i][j]);
+			if (data[i][j] != "")
+			{
+				tmp[i - 1][j] = std::stod(data[i][j]);
+			}
 		}
 	}
 
-	Matrix<T>* tmp1 = &tmp;
-
-	return tmp1;
+	return tmp;
 }
 
 template <typename T>

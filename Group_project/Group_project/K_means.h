@@ -2,6 +2,7 @@
 #include "linear_alg.h"
 #include <iterator>
 #include <algorithm>
+#include "Threads.h"
 
 double distance(Matrix<double> a, Matrix<double> b)//расстояние между точками
 {
@@ -10,23 +11,20 @@ double distance(Matrix<double> a, Matrix<double> b)//расстояние между точками
 	return dist;
 }
 
-class K_MEANS
+class K_MEANS : public algorithm
 {
 public:
-	K_MEANS(int k, Matrix<double> dots)
+	K_MEANS()
 	{
-		_k = k;
-		_dots = dots;
+		_k = 0;
+		_dots = Matrix<double>(0, 0);
 	}
 
-	void do_your_job()
+	vector<Matrix<double>> do_your_job(Matrix<double> data)
 	{
-		/*
-		если будем подавать на вход строку,
-		то можно оставить в самом классе конструктор по умолчанию
-		а в этот метод уже конкретный конструктор с чтением матрицы
-		из CSV файла.
-		*/
+		_k = static_cast<int>(data[0][0]);
+		_dots = data.slice(1, data.get_amount_of_lines() - 1);
+
 		bool cont = true;//параметр отвечающий за продолжение выполнения алгоритма
 		int amount = _dots.get_amount_of_lines();//количество точек
 		std::vector<Matrix<double>> centroids(_k);//вектор центроид
@@ -50,7 +48,7 @@ public:
 				{
 					dists.push_back(distance(c, _dots.slice(i, i)));
 				}
-				nrst_cent[i]= static_cast<int>(std::distance(dists.begin(), min_element(dists.begin(), dists.end())));//определение точки в кластер
+				nrst_cent[i] = static_cast<int>(std::distance(dists.begin(), min_element(dists.begin(), dists.end())));//определение точки в кластер
 				size_of_clusters[nrst_cent[i]] += 1;//увеличение кластера
 			}
 
@@ -58,7 +56,7 @@ public:
 			{
 				new_centroids[i] = Matrix<double>(1, _dots.get_amount_of_columns());
 			}
-			
+
 			for (size_t i = 0; i < amount; i++)
 			{
 				new_centroids[nrst_cent[i]] = new_centroids[nrst_cent[i]] + _dots.slice(i, i);
@@ -92,7 +90,6 @@ public:
 		}
 
 	}
-
 private:
 	int _k;
 	Matrix<double> _dots;
